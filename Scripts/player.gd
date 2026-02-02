@@ -14,6 +14,10 @@ func _ready() -> void:
 	jumps_remaining = max_jumps;
 
 func _physics_process(delta: float) -> void:
+	#movement
+	velocity.x = Input.get_axis("move_left","move_right") * speed;
+	if(velocity.x != 0):
+		anim.flip_h = velocity.x < 0;
 	
 	#gravity
 	if(not is_on_floor()):
@@ -32,11 +36,6 @@ func _physics_process(delta: float) -> void:
 	if(Input.is_action_just_pressed("jump") and jumps_remaining > 0):
 		velocity.y = jumpVelocity;
 		jumps_remaining -= 1;
-	
-	#movement
-	velocity.x = Input.get_axis("move_left","move_right") * speed;
-	if(velocity.x != 0):
-		anim.flip_h = velocity.x < 0;
 	
 	move_and_slide();
 
